@@ -2,22 +2,17 @@ package KeyCount
 
 import "fmt"
 
-type KeyNode struct {
-	Key   string
-	Count int
-}
-
-type KeyCount struct {
+type KeyCountArray struct {
 	keyMap []KeyNode
 }
 
-func NewKeyCount() *KeyCount {
-	keyCount := new(KeyCount)
+func NewKeyCountArray() *KeyCountArray {
+	keyCount := new(KeyCountArray)
 	keyCount.keyMap = make([]KeyNode, 0, 1024)
 	return keyCount
 }
 
-func (k *KeyCount) Add(pattern string) {
+func (k *KeyCountArray) Add(pattern string) {
 	index := k.indexOf(pattern)
 	if index == -1 {
 		index = len(k.keyMap)
@@ -26,7 +21,7 @@ func (k *KeyCount) Add(pattern string) {
 	k.keyMap[index].Count++
 }
 
-func (k *KeyCount) indexOf(pattern string) int {
+func (k *KeyCountArray) indexOf(pattern string) int {
 	for index, keyNode := range k.keyMap {
 		if keyNode.Key == pattern {
 			return index
@@ -35,7 +30,7 @@ func (k *KeyCount) indexOf(pattern string) int {
 	return -1
 }
 
-func (k *KeyCount) Count(pattern string) int {
+func (k *KeyCountArray) Count(pattern string) int {
 	index := k.indexOf(pattern)
 	if index == -1 {
 		return 0
@@ -43,16 +38,19 @@ func (k *KeyCount) Count(pattern string) int {
 	return k.keyMap[index].Count
 }
 
-func (k *KeyCount) Print() {
+func (k *KeyCountArray) Print() {
 	for _, keyNode := range k.keyMap {
 		fmt.Println(keyNode.Key, keyNode.Count)
 	}
 }
-func (k *KeyCount) Total() int {
+func (k *KeyCountArray) Total() int {
 	total := 0
 	for _, keyNode := range k.keyMap {
 		fmt.Println(keyNode.Key, keyNode.Count)
 		total += keyNode.Count
 	}
 	return total
+}
+func (k *KeyCountArray) PrintType() string {
+	return "array"
 }

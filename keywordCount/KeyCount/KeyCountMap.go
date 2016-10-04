@@ -2,22 +2,17 @@ package KeyCount
 
 import "fmt"
 
-type KeyNode struct {
-	Key   string
-	Count int
-}
-
-type KeyCount struct {
+type KeyCountMap struct {
 	keyMap map[string]int
 }
 
-func NewKeyCount() *KeyCount {
-	keyCount := new(KeyCount)
+func NewKeyCountMap() *KeyCountMap {
+	keyCount := new(KeyCountMap)
 	keyCount.keyMap = make(map[string]int)
 	return keyCount
 }
 
-func (k *KeyCount) Add(pattern string) {
+func (k *KeyCountMap) Add(pattern string) {
 	count, ok := k.keyMap[pattern]
 	if !ok {
 		count = 0
@@ -26,19 +21,22 @@ func (k *KeyCount) Add(pattern string) {
 	k.keyMap[pattern] = count
 }
 
-func (k *KeyCount) Count(pattern string) int {
+func (k *KeyCountMap) Count(pattern string) int {
 	return k.keyMap[pattern]
 }
 
-func (k *KeyCount) Print() {
+func (k *KeyCountMap) Print() {
 	for key, count := range k.keyMap {
 		fmt.Println(key, count)
 	}
 }
-func (k *KeyCount) Total() int {
+func (k *KeyCountMap) Total() int {
 	total := 0
 	for _, value := range k.keyMap {
 		total += value
 	}
 	return total
+}
+func (k *KeyCountMap) PrintType() string {
+	return "map"
 }
