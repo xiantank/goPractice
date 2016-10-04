@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	keyCount := KeyCount.NewKeyCount()
+	var keyCount KeyCount.KeyCount
+	keyCount = KeyCount.NewKeyCountArray()
 	finName := os.Args[1]
 	fin, err := os.Open(finName)
 	if err != nil {
