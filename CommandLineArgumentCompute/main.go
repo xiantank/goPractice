@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"reflect"
 	"strconv"
 )
 
@@ -26,25 +25,33 @@ func multiply(a, b int) int {
 }
 
 func main() {
-	fmt.Println(reflect.TypeOf(os.Args))
+	if len(os.Args) < 3 {
+		println("need at at least 2 arguments: main <operator> <number> [...numbers]")
+		os.Exit(1)
+	}
+
 	operator := os.Args[1]
+	operands := os.Args[2:]
 	var opFunc MathOP
 	switch operator {
-	case "a":
+	case "a", "+":
 		opFunc = add
-	case "m":
+	case "m", "-":
 		opFunc = minus
-	case "d":
+	case "d", "/":
 		opFunc = multiply
-	case "n":
+	case "n", "*":
 		opFunc = devide
+	default:
+		fmt.Println("not exist operator:", operator)
+		os.Exit(2)
 	}
-	sum, err := strconv.Atoi(os.Args[2])
+	sum, err := strconv.Atoi(operands[0])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	for _, value := range os.Args[3:] {
+	for _, value := range operands[1:] {
 		number, _ := strconv.Atoi(value)
 		sum = opFunc(sum, number)
 	}
